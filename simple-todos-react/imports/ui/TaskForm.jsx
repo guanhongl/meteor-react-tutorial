@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TasksCollection } from '../api/TasksCollection';
 
-export const TaskForm = () => {
+export const TaskForm = (props) => {
     const [text, setText] = useState('');
 
     const handleSubmit = (event) => {
@@ -10,6 +10,7 @@ export const TaskForm = () => {
         if (text) {
             TasksCollection.insert({
                 text: text.trim(),
+                userId: props.user._id,
                 createdAt: new Date()
             });
         }
