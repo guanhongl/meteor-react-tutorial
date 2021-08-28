@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TasksCollection } from '../api/TasksCollection';
+import { TasksCollection } from '../db/TasksCollection';
 
 export const TaskForm = (props) => {
     const [text, setText] = useState('');
@@ -8,11 +8,12 @@ export const TaskForm = (props) => {
         event.preventDefault(); //prevent reload
 
         if (text) {
-            TasksCollection.insert({
-                text: text.trim(),
-                userId: props.user._id,
-                createdAt: new Date()
-            });
+            // TasksCollection.insert({
+            //     text: text.trim(),
+            //     userId: props.user._id,
+            //     createdAt: new Date()
+            // });
+            Meteor.call('tasks.insert', text.trim());
         }
 
         setText('');

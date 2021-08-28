@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 // import { LinksCollection } from '/imports/api/links';
-import { TasksCollection } from '../imports/api/TasksCollection';
+import { TasksCollection } from '../imports/db/TasksCollection';
+import '/imports/api/tasksMethods';
+import '/imports/api/tasksPublications';
 
 // function insertLink({ title, url }) {
 //   LinksCollection.insert({title, url, createdAt: new Date()});
@@ -46,8 +48,16 @@ Meteor.startup(() => {
         });
     }
 
+    if (!Accounts.findUserByUsername('steven')) {
+        Accounts.createUser({
+            username: 'steven',
+            password: '123'
+        });
+    }
+
     const user = Accounts.findUserByUsername(SEED_USERNAME);
 
+    // initialize 'meteorite' w/ 7 tasks
     if (TasksCollection.find().count() === 0) {
         [
             'First Task',
